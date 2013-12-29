@@ -34,9 +34,6 @@
     <%= f.label :dob %><br />
     <%= f.date_select :dob, :start_year => 1930, :end_year => 1999 %>
   </div>
-  <%= render "select_work", {:f => f} %>
-  <%= render "select_break", {:f => f} %>
-
   <div class="field">
     <%= f.label :address %><br />
     <%= f.text_area :address %>

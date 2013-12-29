@@ -19,9 +19,7 @@
 
 <% if current_user.volunteer.status == "New" %>
   <p>Your application has been recived. Please bear with us while your application is processed</p>
-<% end %>
-
-<% if current_user.volunteer.status == "Awaiting Orientation" %>
+<% elsif current_user.volunteer.status == "Awaiting Orientation" %>
   <p>
     <% if current_user.volunteer.orientation_id != 1 %>
       Your application has been accepted. You are scheduled to attend your orientation on 
@@ -32,42 +30,7 @@
   </p>
 <% elsif current_user.volunteer.status == "Rejected" %>
   <p>Unfortunatly your application has been rejected. We will keep your details on record and contact you if another position opens.</p>
-<% 
-
-
-else
-
-
-
-
-
- %>
-  <p>You are next rostered on at ?? <br />
-
-
-
-
-  <b>Noted absences, since 
-              <%= Time.now - @volcoordinator.absence_period.weeks %>:</b>
-  <% absent = current_user.volunteer.absences.where( "day > ?", 
-              Time.now - @volcoordinator.absence_period.weeks) %>
-  <% if absent.empty? %>
-    none
-  <% else %>
-    <br/>
-    <% b = Array.new %>
-    <% absent.each do |a| %>
-      <% b << a.day.strftime("%a %d/%m/%Y") %>
-    <% end %>
-    <p id="warning">
-      <%= b.join(', ') %>
-    </p>
-  <% end %>
-
-
-
-
-
+<% else %>
   <h2>Notes</h2>
   <% current_user.volunteer.whiteboards.each do |whiteboard| %>
   <div class="note">
@@ -78,14 +41,11 @@ else
       <%= whiteboard.body %>
   </span>
   </div>
-  <% end %>
+<% end %>
+
 <% if current_user.volunteer.whiteboards.empty? %>
 No Notes
 <% end %>
-
-
-
-
 
 <h2>Add a note:</h2>
 <%= form_for([current_user.volunteer, current_user.volunteer.whiteboards.build]) do |f| %>
@@ -100,6 +60,4 @@ No Notes
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
-
 <% end %>

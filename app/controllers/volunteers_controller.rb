@@ -33,7 +33,6 @@ class VolunteersController < ApplicationController
   # GET /volunteers/new.json
   def new
     @volunteer = Volunteer.new
-#    @onday = Onday.new
 
  #   respond_to do |format|
   #    format.html # new.html.erb
@@ -44,12 +43,6 @@ class VolunteersController < ApplicationController
   # GET /volunteers/1/edit
   def edit
     @volunteer = Volunteer.find(params[:id])
-    
-    @onday = @volunteer.ondays.build(params[:availableday])
-    @jobdescription = Jobdescription.new
-#     @orientation = Orientation.new
-#     @orientation = @volunteer.datetime.build(params[:datetime])
-
   end
 
   # POST /volunteers

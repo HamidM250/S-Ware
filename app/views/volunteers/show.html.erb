@@ -54,38 +54,11 @@
   <b>Is a Fosterer:</b>
   <%= @volunteer.befosterer.nil? ? "no" : "yes" %>
 </p>
-<p>
-  <% job = next_working @volunteer %>
-  <b>Next working:</b>
-    <%= (job[0].nil? or job[0] == "none") ? 'no' : job[1] +job[2] %>
-  <b>in job:</b>
-    <%= (job[0].nil? or job[0] == "none") ? 'no' : job[0] %>
-</p>
 
 <p>
   <b>Background:</b>
   <%= @volunteer.background %>
 </p>
-
-<p><%############## Volunteer Absences ########### %>
-  <b>Noted absences, since 
-              <%= Time.now - @volcoordinator.absence_period.weeks %>:</b>
-  <% absent = @volunteer.absences.where( "day > ?", 
-              Time.now - @volcoordinator.absence_period.weeks) %>
-  <% if absent.empty? %>
-    none
-  <% else %>
-    <br/>&nbsp&nbsp
-    <% b = Array.new %>
-    <% absent.each do |a| %>
-      <% b << a.day.strftime("%a %d/%m/%Y") %>
-    <% end %>
-    <t id="warning">
-      <%= b.join(', ') %>
-    </t>
-  <% end %>
-</p>
-
 
 <h2>Notes</h2>
 <% @volunteer.whiteboards.each do |whiteboard| %>
