@@ -10,34 +10,9 @@ class Volunteer < ActiveRecord::Base
 
   has_many :whiteboards
   has_one  :fosterer
-  has_one :fosterer2
-  has_many :absences
   belongs_to :user
     accepts_nested_attributes_for :user
   belongs_to :orientation
-  has_many :work_histories
-  belongs_to :volscheduler
-    accepts_nested_attributes_for :volscheduler
-
-  # TODO swap this so volunteer has a department and accesses volscheduler through the department
-  has_one  :department,
-           :through => :volscheduler
-
-  has_many :vol_job_day
-    accepts_nested_attributes_for :vol_job_day,
-       #    :reject_if => :all_blank,
-           :allow_destroy => true
-
-  has_many :jobdescriptions,
-           :through => :vol_job_day
-    accepts_nested_attributes_for :jobdescriptions
-
-  has_many :ondays,
-           :through => :vol_job_day
-    accepts_nested_attributes_for :ondays
-
-  has_many :frequencies,
-           :through => :vol_job_day
   
   validates  :role, :presence => true
   #validates :title, :presence => true #, :message => ""
@@ -68,7 +43,6 @@ class Volunteer < ActiveRecord::Base
   
   validate :over_18_validator
   
-  after_find :enable_vol_job_day
   after_save :send_confirmation_email
 
 ##############################################################
@@ -93,27 +67,6 @@ class Volunteer < ActiveRecord::Base
 
   def test_email_confirmation_message
     return send_confirmation_email
-  end
-
-  def breakdate_validator
-    return if(break_from.nil? && break_to.nil?)
-    start =  break_from.class == Date ? break_from : Date.new(break_from.to_s)
-    finish = break_to.class == Date   ? break_to   : Date.new(break_to.to_s)
-    if start.nil? || finish.nil?
-      if start.nil?
-        errors.add(:break_from, "invalid date string, use dd/mm/yyyy")
-      end      
-      if finish.nil?
-        errors.add(:break_to, "invalid date string, use dd/mm/yyyy")
-      end
-    else
-      if start > finish
-        errors.add(:break_to, "end date must be later than start")
-      end
-      if finish < Date.new
-        errors.add(:break_to, "end date must be a future date")
-      end
-    end
   end
 
   # precondition: after_save callback only triggers on a successfull save
@@ -148,20 +101,4 @@ class Volunteer < ActiveRecord::Base
     return message # used in test
 #    end
   end
-
-  private
-  def enable_vol_job_day
-    ActiveRecord::Base.transaction do
-      if( vol_job_day.empty? )
-        (1..7).each do |n|
-          v = VolJobDay.new
-          v.volunteer_id = self.id
-          v.jobdescription_id = 1
-          v.onday_id = n
-          v.save
-        end
-      end
-    end
-  end
-
 end

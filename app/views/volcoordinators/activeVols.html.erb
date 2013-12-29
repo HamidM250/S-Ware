@@ -5,9 +5,6 @@
     <th>Firstname</th>
     <th>Lastname</th>
     <th>Be a Fosterer</th>
-    <th>Next Working</th>
-    <th>in job</th>
-    <th class="ismeasure">Recent<br/>absences</th>
     <th></th>
     <th></th>
     <th></th>
@@ -27,19 +24,6 @@
                                                 :action => 'new', :volunteer_id => volunteer.id} %>
           <%end%>
         </td>
-
-        <% job = next_working volunteer %>
-        <td><%= (job.nil? or job[0] == "none") ? 'no' : job[1] + job[2] %></td>
-        <td><%= (job.nil? or job[0] == "none") ? 'no' : job[0] %></td>
-        <% absent = volunteer.absences.where( "day > ?",
-                                              Time.now - @volcoordinator.absence_period.weeks).count %>
-        <% lvl= @volcoordinator.absence_tolerence/3 %>
-        <td class=
-              <%= absent <   lvl ? "ismeasure" :
-                          absent < 2*lvl ? "islow" :
-                                  absent < 3*lvl ? "ismedium" : "ishigh" %>
-        >
-          <%= (job.nil? or job[0] == "none") ? 'no' : absent %></td>
 
         <td><%= link_to 'Show', volunteer %></td>
         <td><%= link_to 'Edit', edit_volunteer_path(volunteer) %></td>

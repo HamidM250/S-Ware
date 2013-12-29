@@ -8,27 +8,12 @@ SPCA::Application.routes.draw do
   #root :to => "users#new"
   resources :users
   resources :sessions
-  
-  
-  
-  resources :roster_coordinators
-  resources :departments
-  resources :jobdescriptions
 
   resources :orientations
 
-
   get "help/volunteer"
-
   get "help/foster"
-
   get "help/coordinator"
-
-
-  resources :volschedulers do
-    resources :volunteers
-  end
-
 
 #  get "fosterer/index"
   resources :fosterers

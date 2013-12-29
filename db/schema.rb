@@ -11,60 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008045546) do
-
-  create_table "absences", :force => true do |t|
-    t.date     "day"
-    t.integer  "volunteer_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "absences", ["day"], :name => "index_absences_on_day"
-
-  create_table "availabledays", :force => true do |t|
-    t.string   "day"
-    t.integer  "dayint"
-    t.integer  "volunteer_id"
-    t.integer  "schedulejobtype_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-  end
+ActiveRecord::Schema.define(:version => 20130930041532) do
 
   create_table "data_files", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "departments", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "fosterer2s", :force => true do |t|
-    t.string   "ownhome"
-    t.string   "inspecting"
-    t.string   "rooms"
-    t.string   "roomwarm"
-    t.string   "hutch"
-    t.string   "rabbithutch"
-    t.string   "aviary"
-    t.string   "livestockfenced"
-    t.text     "homedesc"
-    t.integer  "numadulta"
-    t.integer  "numchild"
-    t.string   "ages"
-    t.integer  "numhoursperday"
-    t.string   "worktype"
-    t.text     "secondperson"
-    t.string   "allmembersagree"
-    t.string   "bringcentre"
-    t.text     "transportdesc"
-    t.boolean  "agreement"
-    t.integer  "volunteer_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
   end
 
   create_table "fosterers", :force => true do |t|
@@ -108,24 +59,6 @@ ActiveRecord::Schema.define(:version => 20131008045546) do
     t.string   "personal"
   end
 
-  create_table "frequencies", :force => true do |t|
-    t.string  "name", :default => "weekly", :null => false
-    t.integer "week", :default => 1,        :null => false
-  end
-
-  create_table "jobdescriptions", :force => true do |t|
-    t.string   "name"
-    t.integer  "department_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "ondays", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "orientations", :force => true do |t|
     t.string   "presenter"
     t.datetime "datetime"
@@ -136,16 +69,6 @@ ActiveRecord::Schema.define(:version => 20131008045546) do
     t.datetime "updated_at",         :null => false
   end
 
-  create_table "roster_coordinators", :force => true do |t|
-    t.string   "firstname"
-    t.string   "lastname"
-    t.string   "title"
-    t.integer  "department_id"
-    t.integer  "user_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "encrypted_password"
@@ -153,15 +76,6 @@ ActiveRecord::Schema.define(:version => 20131008045546) do
     t.string   "role"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
-  end
-
-  create_table "vol_job_days", :force => true do |t|
-    t.integer  "volunteer_id"
-    t.integer  "jobdescription_id"
-    t.integer  "onday_id"
-    t.integer  "frequency_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
   end
 
   create_table "volcoordinators", :force => true do |t|
@@ -175,12 +89,6 @@ ActiveRecord::Schema.define(:version => 20131008045546) do
     t.integer  "user_id"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-  end
-
-  create_table "volschedulers", :force => true do |t|
-    t.integer  "department_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
   end
 
   create_table "volunteers", :force => true do |t|
@@ -218,16 +126,5 @@ ActiveRecord::Schema.define(:version => 20131008045546) do
   end
 
   add_index "whiteboards", ["volunteer_id"], :name => "index_whiteboards_on_volunteer_id"
-
-  create_table "work_histories", :force => true do |t|
-    t.integer  "volunteer_id"
-    t.date     "workdate",                        :null => false
-    t.string   "job",                             :null => false
-    t.string   "department",                      :null => false
-    t.string   "supervisor",                      :null => false
-    t.boolean  "absent",       :default => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
 
 end
